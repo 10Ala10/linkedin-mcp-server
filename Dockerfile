@@ -24,6 +24,9 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 RUN adduser -D -u 1000 mcpuser && chown -R mcpuser:mcpuser /app
 USER mcpuser
 
-# Set entrypoint and default arguments
+# Expose port for HTTP mode
+EXPOSE 8080
+
+# Set entrypoint and default arguments for HTTP mode
 ENTRYPOINT ["uv", "run", "-m", "linkedin_mcp_server"]
-CMD []
+CMD ["--transport", "streamable-http", "--host", "0.0.0.0", "--port", "8080", "--path", "/mcp"]
